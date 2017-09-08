@@ -754,7 +754,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('img', {
     attrs: {
-      "src": _vm.images[_vm.pageCount],
+      "src": _vm.images[_vm.pageCount - 1],
       "alt": ""
     }
   })]), _vm._v(" "), (!_vm.isOnClass) ? _c('div', {
@@ -1679,6 +1679,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 /*功能
  * 1.获取本地视频流并显示出来，记得清除多余的mediaStream
@@ -1717,7 +1719,7 @@ exports.default = {
 			remoteBox: null,
 			images: [],
 			imagesObj: [],
-			pageCount: 0, // 图片页数
+			pageCount: 1, // 图片页数
 			isOnClass: false,
 			studentIn: false, // 判断学生是否进来
 			teacherName: (0, _util.getStore)('name'),
@@ -1735,7 +1737,7 @@ exports.default = {
 			return this.images.length;
 		},
 		nowPage: function nowPage() {
-			return this.pageCount + 1;
+			return this.pageCount;
 		},
 
 		gapTime: {
@@ -1860,7 +1862,7 @@ exports.default = {
 						} else {
 							_this2._reDrawByPage(historyData.data.result.student, historyData.data.result.teacher);
 						}
-						if (_this2.pageCount < _this2.images.length - 1) {
+						if (_this2.pageCount < _this2.images.length) {
 							_this2.pageCount++;
 						}
 					}
@@ -1893,6 +1895,8 @@ exports.default = {
 		//
 		this._offClass();
 		this.clearStreams();
+		//				this.localBox.stop()
+		//				this.remoteBox.stop()
 		clearInterval((0, _util.getSession)('interval_id'));
 		(0, _util.removeSession)('interval_id');
 	},
@@ -2070,7 +2074,7 @@ exports.default = {
 					that.signal1 = (0, _util.computeVolume)(that.remoteBox.dataArray, 300);
 				});
 				that.remoStreamObj = remoteStreamObj;
-				document.getElementById('remoteVideo').srcObject = remoteStreamObj.mediaStream;
+				document.getElementById('remoteVideoURL').srcObject = remoteStreamObj.mediaStream;
 				that.isShowStudentVideo = true;
 				that.studentIn = true;
 			});
@@ -2198,7 +2202,7 @@ exports.default = {
 			};
 			this._sendMessage('page', JSON.stringify(_temp)).then(function (res) {
 				//						console.log(res.data)
-				if (_this7.pageCount == 0) {
+				if (_this7.pageCount == 1) {
 					return;
 				}
 				//						console.log(res.data.result.pageHistory.teacher)
@@ -2213,8 +2217,8 @@ exports.default = {
 			var _this8 = this;
 
 			var _temp = {
-				page: this.pageIds[this.pageCount + 1].toString(),
-				imageUrl: this.images[this.pageCount + 1]
+				page: this.pageIds[this.pageCount].toString(),
+				imageUrl: this.images[this.pageCount]
 
 			};
 			this._sendMessage('page', JSON.stringify(_temp)).then(function (res) {
