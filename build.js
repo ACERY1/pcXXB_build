@@ -55678,7 +55678,8 @@ var state = {
 		subjectName: null,
 		avatar: null
 	},
-	isCountingTime: false
+	isCountingTime: false, // 判断是否几十
+	userAgent: null
 };
 exports.default = new _vuex2.default.Store({
 	state: state,
@@ -66482,8 +66483,21 @@ exports.default = {
 	created: function created() {
 		var _this = this;
 
+		// 判断客户端
+		if (navigator.userAgent.indexOf("Electron") != -1) {
+			// for Electron
+			this.$store.commit("UPDATE_USER_AGENT", "native");
+		} else {
+			// for web
+			this.$store.commit("UPDATE_USER_AGENT", "web");
+		}
+
+		var usrAgent = this.$store.state.userAgent;
+
+		console.log('nowAgent: ' + usrAgent + "\n");
+
 		/*TODO:判断登录还是有问题 ps:现在解决了*/
-		if ((0, _util.getCookie)("x_token") == null || (0, _util.getStore)('name') == '请登录') {
+		if ((0, _util.getStore)('x_token') == null && usrAgent == "native" || (0, _util.getCookie)("x_token") == null && usrAgent == "web" || (0, _util.getStore)('name') == '请登录') {
 			this.$router.push('/static/login');
 		} else {
 			/*TODO:根据session 里是否有temp_courseId 来判断是否是从制作课件跳转回来的*/
@@ -66501,6 +66515,7 @@ exports.default = {
 				return;
 			}
 		}
+
 		window.onkeydown = function (e) {
 			if (e.code == 'Escape') {
 				_this.$ipc.send('esc');
@@ -67098,6 +67113,7 @@ var STORE_COURSE_LIST = exports.STORE_COURSE_LIST = 'STORE_COURSE_LIST'; // 保�
 var UPDATE_X_TOKEN = exports.UPDATE_X_TOKEN = 'UPDATE_X_TOKEN'; // 存Token
 var UPDATE_COURSE_INFO = exports.UPDATE_COURSE_INFO = 'UPDATE_COURSE_INFO'; // 存课程信息（填写报告页面）
 var START_COUNT_TIME = exports.START_COUNT_TIME = 'START_COUNT_TIME'; // 开始计时
+var UPDATE_USER_AGENT = exports.UPDATE_USER_AGENT = 'UPDATE_USER_AGENT'; // 更新客户端型号
 
 /***/ }),
 /* 125 */
@@ -67169,6 +67185,8 @@ exports.default = (_RECORD_TEACHER_INFO$ = {}, _defineProperty(_RECORD_TEACHER_I
 	state.courseInfo.avatar = data.profile_image_url;
 }), _defineProperty(_RECORD_TEACHER_INFO$, _mutation_types.START_COUNT_TIME, function (state) {
 	state.isCountingTime = true;
+}), _defineProperty(_RECORD_TEACHER_INFO$, _mutation_types.UPDATE_USER_AGENT, function (state, userAgent) {
+	state.userAgent = userAgent;
 }), _RECORD_TEACHER_INFO$);
 
 /***/ })
