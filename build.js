@@ -56025,8 +56025,9 @@ exports.default = async function () {
 
 	// 提示： 这里的url填相对路径 例如'/test/example'
 	type = type.toUpperCase();
-	url = _baseURL2.default + url;
-
+	if (type != 'UPLOAD') {
+		url = _baseURL2.default + url;
+	}
 	if (type === 'GET') {
 		var dataStr = ''; //数据拼接字符串
 		Object.keys(data).forEach(function (key) {
