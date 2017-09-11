@@ -66546,9 +66546,9 @@ Object.defineProperty(exports, "__esModule", {
 
 // export default URL = 'http://test.91xuexibao.com'
 
-exports.default = URL = 'http://localhost:2048';
+// export default URL = 'http://localhost:2048'
 
-// export default URL = 'https://webapi.91xuexibao.com'
+exports.default = URL = 'https://webapi.91xuexibao.com';
 
 /***/ }),
 /* 120 */
