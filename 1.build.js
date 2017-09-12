@@ -994,8 +994,9 @@ var WebRTC = function WebRTC(role) {
     // websocketServer = "ws://" + window.sessionStorage.getItem('temp_host') + "/media/websocket/ws",
     // websocketServer = "ws://localhost:2048/media/websocket/ws",
     // websocketServer = "ws://124.251.0.199:10002/media/websocket/ws", // 测试环境
-    websocketServer = "ws://124.251.0.199:10001/media/websocket/ws",
-        // 正式环境
+    // websocketServer = "ws://124.251.0.199:10001/media/websocket/ws", // 正式环境
+    websocketServer = "wss://webcast.91xuexibao.com/media/websocket/ws",
+        // 正式环境域名版
 
     packetSize = 100,
         iceServer = {
