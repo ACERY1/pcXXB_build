@@ -980,6 +980,9 @@ var update = __webpack_require__(45)("673a4fb4", content, true);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _baseURL = __webpack_require__(48);
+
 var WebRTC = function WebRTC(role) {
     var PeerConnection = window.PeerConnection || window.webkitPeerConnection00 || window.webkitRTCPeerConnection || window.mozRTCPeerConnection,
         URL = window.URL || window.webkitURL || window.msURL || window.oURL,
@@ -989,13 +992,7 @@ var WebRTC = function WebRTC(role) {
         // order is very important: "RTCSessionDescription" defined in Nighly but useless
 
     moz = !!navigator.mozGetUserMedia,
-
-
-    // websocketServer = "ws://" + window.sessionStorage.getItem('temp_host') + "/media/websocket/ws",
-    // websocketServer = "ws://localhost:2048/media/websocket/ws",
-    // websocketServer = "ws://124.251.0.199:10002/media/websocket/ws", // 测试环境
-    // websocketServer = "ws://124.251.0.199:10001/media/websocket/ws", // 正式环境
-    websocketServer = "wss://webcast.91xuexibao.com/media/websocket/ws",
+        websocketServer = _baseURL.wsURL + "/media/websocket/ws",
         // 正式环境域名版
 
     packetSize = 100,
@@ -2036,13 +2033,10 @@ exports.default = {
 						googNoiseSuppression: true
 					}]
 				} // 视频流配置
-
 			};webrtc.on("socket_opened", function () {
-
 				// 1.建一个对象，传入配置，发射出来，然后返回对象便以后操作
 				webrtc.createLocalStream(streamConfig);
 			});
-
 			webrtc.on("stream_created", function (e) {
 				localStreamObj = new _XmediaStream.XMediaStream();
 				localStreamObj.recordStream(e.stream);
@@ -2059,7 +2053,6 @@ exports.default = {
 				document.getElementById('localVideo').srcObject = localStreamObj.mediaStream;
 				that.isShowTeacherVideo = true;
 			});
-
 			webrtc.on("peer_stream", function (e) {
 				// 来自对方
 				remoteStreamObj = new _XmediaStream.XMediaStream();
@@ -2076,7 +2069,6 @@ exports.default = {
 				that.isShowStudentVideo = true;
 				that.studentIn = true;
 			});
-
 			webrtc.on("remove_peer", function () {
 				console.log("remove_peer");
 			});
