@@ -66523,6 +66523,9 @@ exports.default = {
 	created: function created() {
 		var _this = this;
 
+		console.log("file URL:" + window.location.href.split('#')[0]);
+		(0, _util.setStore)("filePath", window.location.href.split('#')[0]);
+
 		// 判断客户端
 		if (navigator.userAgent.indexOf("Electron") != -1) {
 			// for Electron

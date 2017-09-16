@@ -1678,6 +1678,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 
 /*功能
  * 1.获取本地视频流并显示出来，记得清除多余的mediaStream
@@ -1734,6 +1736,7 @@ exports.default = {
 			return this.images.length;
 		},
 		nowPage: function nowPage() {
+			//					console.log("计算自增")
 			return this.pageCount + 1;
 		},
 
@@ -1849,6 +1852,10 @@ exports.default = {
 					for (var _iterator2 = _this2.pageIds[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 						var _item = _step2.value;
 
+						if (_this2.pageCount < _this2.images.length && historyData.data.result.pageId != undefined && historyData.data.result.pageId != _item) {
+							//								console.log("断点上课自增")
+							_this2.pageCount++;
+						}
 						if (historyData.data.result.pageId == _item) {
 							return;
 						}
@@ -1859,9 +1866,8 @@ exports.default = {
 						} else {
 							_this2._reDrawByPage(historyData.data.result.student, historyData.data.result.teacher);
 						}
-						if (_this2.pageCount < _this2.images.length) {
-							_this2.pageCount++;
-						}
+						//							console.log(historyData.data)
+						//							console.log(this.images)
 					}
 
 					//						console.log(this.coursewareId, this.images, this.lessonToken)
@@ -1923,7 +1929,7 @@ exports.default = {
 
 		// 发送上课命令
 		_onClass: function _onClass() {
-			console.log('上课');
+			//					console.log('上课')
 			this.$ipc.send("onClass", true);
 		},
 
@@ -2220,6 +2226,7 @@ exports.default = {
 					_this8._reDrawByPage(res.data.result.pageHistory.student, res.data.result.pageHistory.teacher);
 					//							this._reDrawByPage(res.data.result.pageHistory.teacher,res.data.result.pageHistory.student, )
 					_this8.pageCount++;
+					console.log("下一页自增");
 				} else {
 					console.error(res.data.msg);
 				}
